@@ -16,7 +16,7 @@ st.title("Car Rental Recommendation System")
 # Sidebar for user inputs
 st.sidebar.header("Filter your car search")
 
-# Create filter options
+# Create filter options based on dataset columns
 category_filter = st.sidebar.selectbox('Category', car_data['Category'].unique())
 fuel_type_filter = st.sidebar.selectbox('Fuel Type', car_data['Fuel Type'].unique())
 price_filter = st.sidebar.slider('Price Per Day (INR)', int(car_data['Price Per Day (INR)'].min()), int(car_data['Price Per Day (INR)'].max()))
@@ -34,16 +34,18 @@ filtered_data = car_data[
 
 # Display filtered results
 st.subheader(f"Available {category_filter} Cars:")
-st.write(filtered_data[['Car Name', 'Features', 'Price Per Day (INR)', 'Safety Rating']])
+st.write(filtered_data[['Car Name', 'Price Per Day (INR)', 'Number of Seats', 'Air Conditioning', 'Safety Rating', 'Fuel Type']])
 
 # Display car details for selected cars
 if not filtered_data.empty:
     st.subheader("Car Details")
     for index, row in filtered_data.iterrows():
         st.write(f"**Car Name**: {row['Car Name']}")
-        st.write(f"**Features**: {row['Features']}")
         st.write(f"**Price Per Day**: {row['Price Per Day (INR)']} INR")
+        st.write(f"**Number of Seats**: {row['Number of Seats']}")
+        st.write(f"**Air Conditioning**: {row['Air Conditioning']}")
         st.write(f"**Safety Rating**: {row['Safety Rating']} / 5")
+        st.write(f"**Fuel Type**: {row['Fuel Type']}")
         st.write("---")
 else:
     st.write("No cars found matching your criteria.")
